@@ -1,41 +1,42 @@
-"use client"; // Indiquer que ce composant est un Client Component
+"use client";
 
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { useState } from 'react'; // Importer useState pour gérer les entrées du formulaire
 
-export default function Home() {
-  // État pour les valeurs du formulaire
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Fonction de gestion de la soumission du formulaire
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Logique de connexion à ajouter ici
-    console.log('Email:', email);
-    console.log('Mot de passe:', password);
+    const result = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.ok) {
+      window.location.href = '/dashboard/accueil'; // Redirection après connexion réussie
+    } else {
+      console.log('Erreur de connexion');
+    }
   };
 
   return (
     <main className="flex min-h-screen">
-      {/* Section de l'image */}
       <div className="w-1/2 relative">
         <Image
-          src="/images/imagelogin.png" // Chemin vers l'image dans le répertoire public
+          src="/images/imagelogin.png"
           alt="Image d'accueil"
-          layout="fill" // Remplit l'espace disponible
-          objectFit="cover" // Couvrir l'espace tout en conservant les proportions
+          layout="fill"
+          objectFit="cover"
         />
       </div>
 
-      {/* Section de la connexion */}
       <div className="w-1/2 flex flex-col justify-center items-center p-8 bg-white">
-        {/* Marge ajoutée pour monter le titre */}
-        <h1 className="text-3xl font-medium mb-8 text-black">Connexion</h1> {/* Augmenter la marge inférieure */}
-
-        {/* Bloc pour séparer le titre du formulaire */}
-        <div className="w-full mb-8 h-6"></div> {/* Espace vide pour séparation */}
-
+        <h1 className="text-3xl font-medium mb-8 text-black">Connexion</h1>
+        <div className="w-full mb-8 h-6"></div>
         <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md flex flex-col items-center">
           <div className="w-full">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Identifiant ou Email</label>
@@ -48,7 +49,6 @@ export default function Home() {
               required
             />
           </div>
-          
           <div className="w-full mt-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Mot de Passe</label>
             <input
@@ -60,19 +60,14 @@ export default function Home() {
               required
             />
           </div>
-
-          {/* Lien pour mot de passe oublié */}
-          <a href="/forgot-password" className="text-gray-700 text-sm mt-2 self-start underline">Mot de passe oublié ?</a> {/* Souligner le texte */}
-
+          <a href="/forgot-password" className="text-gray-700 text-sm mt-2 self-start underline">Mot de passe oublié ?</a>
           <button
             type="submit"
-            className="mt-6 py-3 px-12 bg-[#141c5b] text-white font-medium rounded-md hover:bg-[#0d1a43]" // Réajuster la longueur du bouton
+            className="mt-6 py-3 px-12 bg-[#141c5b] text-white font-medium rounded-md hover:bg-[#0d1a43]"
           >
             Connexion
           </button>
         </form>
-
-        {/* Texte des droits réservés */}
         <footer className="mt-8 text-sm text-gray-500">
           <p>Tous droits réservés AGYL TECH 2024</p>
         </footer>
@@ -80,4 +75,3 @@ export default function Home() {
     </main>
   );
 }
-

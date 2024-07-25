@@ -1,33 +1,55 @@
+/* src/app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Définir les couleurs de la charte graphique */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* Couleur du texte en blanc */
+  --foreground-color: #ffffff;
+  
+  /* Couleur de fond en bleu */
+  --background-color: #141c5b;
 }
 
+/* Modifier les styles pour le mode sombre si nécessaire */
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    /* En mode sombre, le texte reste blanc */
+    --foreground-color: #ffffff;
+    
+    /* En mode sombre, le fond reste bleu */
+    --background-color: #141c5b;
   }
 }
 
+/* Appliquer les couleurs de la charte graphique au corps de la page */
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* Appliquer la couleur définie pour le texte */
+  color: var(--foreground-color);
+  
+  /* Appliquer la couleur définie pour le fond */
+  background: var(--background-color);
 }
 
+/* Exemple de classe utilitaire personnalisée */
 @layer utilities {
+  /* Classe utilitaire pour l'enroulement du texte */
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Ajoutez ceci à la fin de votre fichier */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+h1 {
+  color: #141c5b;
+}
+
+p {
+  margin-top: 1rem;
 }

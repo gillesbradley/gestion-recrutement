@@ -1,18 +1,10 @@
-// src/app/dashboard/accueil/page.tsx
-'use client'; // Marquer ce fichier comme un composant côté client
+"use client";
 
-import Sidebar from '@/components/Sidebar';
-
-const AccueilPage = () => {
+export default function DashboardAccueil() {
   return (
-    <div className="flex">
-    
-      <main className="flex-1 p-6 bg-white">
-        <h1 className="text-2xl font-semibold">Page d'Accueil</h1>
-        {/* Ajoute le contenu principal de la page ici */}
-      </main>
-    </div>
+    <main className="flex min-h-screen flex-col justify-center items-center p-8 bg-white">
+      <h1 className="text-3xl font-medium mb-8 text-black">Bienvenue sur le Dashboard</h1>
+      <p>Cette page est actuellement en cours de construction.</p>
+    </main>
   );
-};
-
-export default AccueilPage;
+}

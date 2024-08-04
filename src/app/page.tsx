@@ -1,19 +1,19 @@
 "use client"; // Indiquer que ce composant est un Client Component
 
 import Image from 'next/image';
-import { useState } from 'react'; // Importer useState pour gérer les entrées du formulaire
+import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Correct import for useRouter in Next.js 13
 
 export default function Home() {
   // État pour les valeurs du formulaire
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   // Fonction de gestion de la soumission du formulaire
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Logique de connexion à ajouter ici
-    console.log('Email:', email);
-    console.log('Mot de passe:', password);
+    router.push('/dashboard/accueil');
   };
 
   return (

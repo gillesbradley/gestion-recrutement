@@ -1,36 +1,30 @@
-// app/api/auth/[...nextauth]/route.ts
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+// app/api/auth/nextauth.ts
+
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        // Remplace cette logique avec ta vérification réelle
-        if (credentials.email === "test@example.com" && credentials.password === "password") {
-          return { id: 1, name: "User", email: credentials.email };
+        // Remplace cette logique par une vérification d'authentification réelle
+        if (credentials?.email === 'gillesbrady@hotmail.com' && credentials?.password === 'pass0000') {
+          return { id: '1', name: 'Gilles Brady', email: 'gillesbrady@hotmail.com' };
+        } else {
+          return null;
         }
-        return null;
       },
     }),
   ],
   pages: {
-    signIn: '/login', // Rediriger vers la page de connexion
+    signIn: '/', // Page de connexion personnalisée si nécessaire
   },
-  session: {
-    strategy: "jwt",
-  },
-  callbacks: {
-    async redirect({ url, baseUrl }) {
-      // Redirection après la connexion réussie
-      return url.startsWith(baseUrl) ? url : baseUrl;
-    },
-  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions);

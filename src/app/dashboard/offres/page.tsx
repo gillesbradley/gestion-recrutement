@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'; // Mise à jour pour éviter l'erreur de montage de NextRouter
+import Sidebar from '../../../components/Sidebar'; // Assurez-vous que le chemin est correct
 
 type Offre = {
   id: number;
@@ -21,27 +21,88 @@ const offresInitiales: Offre[] = [
 
 const Offres = () => {
   const [offres, setOffres] = useState<Offre[]>(offresInitiales);
+  const [showMenu, setShowMenu] = useState<number | null>(null);
 
   useEffect(() => {
     // Ici, vous pouvez ajouter du code pour récupérer les offres depuis une API
   }, []);
 
+  const handleMenuToggle = (id: number) => {
+    setShowMenu(showMenu === id ? null : id);
+  };
+
+  const handleConsult = (id: number) => {
+    console.log(`Consulter les candidatures pour l'offre ${id}`);
+    // Ajoutez la logique pour consulter les candidatures
+  };
+
+  const handleEdit = (id: number) => {
+    console.log(`Modifier l'offre ${id}`);
+    // Ajoutez la logique pour modifier l'offre
+  };
+
+  const handleShare = (id: number) => {
+    console.log(`Partager l'offre ${id}`);
+    // Ajoutez la logique pour partager l'offre
+  };
+
+  const handleDelete = (id: number) => {
+    console.log(`Supprimer l'offre ${id}`);
+    // Ajoutez la logique pour supprimer l'offre
+  };
+
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
-      {/* Main content */}
+      
       <main className="flex-1 p-8">
-        <h1 className="text-3xl font-medium mb-8">Offres d'emploi</h1>
-        <div className="space-y-4">
-          {offres.map((offre) => (
-            <div key={offre.id} className="border p-4 rounded-md shadow-sm">
-              <h2 className="text-2xl font-semibold">{offre.title}</h2>
-              <p className="text-gray-700">{offre.description}</p>
-              <p className="text-gray-500">Lieu : {offre.location}</p>
-              <p className="text-gray-400">Posté le : {offre.postedDate}</p>
-            </div>
-          ))}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-medium">Offres d'emploi</h1>
+          <Link href="/dashboard/offres/creer" className="bg-[#141c5b] text-white py-2 px-4 rounded">
+            Créer une offre
+          </Link>
         </div>
+        <table className="w-full text-left table-auto">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Titre</th>
+              <th className="px-4 py-2">Description</th>
+              <th className="px-4 py-2">Lieu</th>
+              <th className="px-4 py-2">Date de publication</th>
+              <th className="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="text-[#6d6d6d]">
+            {offres.map((offre) => (
+              <tr key={offre.id} className="border-b">
+                <td className="px-4 py-2">{offre.title}</td>
+                <td className="px-4 py-2">{offre.description}</td>
+                <td className="px-4 py-2">{offre.location}</td>
+                <td className="px-4 py-2">{offre.postedDate}</td>
+                <td className="px-4 py-2 relative">
+                  <button onClick={() => handleMenuToggle(offre.id)}>
+                    <Image src="/icons/three-dots.svg" alt="Actions" width={20} height={20} />
+                  </button>
+                  {showMenu === offre.id && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-md">
+                      <button className="block w-full text-left px-4 py-2 hover:bg-gray-100" onClick={() => handleConsult(offre.id)}>
+                        Consulter
+                      </button>
+                      <button className="block w-full text-left px-4 py-2 hover:bg-gray-100" onClick={() => handleEdit(offre.id)}>
+                        Modifier
+                      </button>
+                      <button className="block w-full text-left px-4 py-2 hover:bg-gray-100" onClick={() => handleShare(offre.id)}>
+                        Partager
+                      </button>
+                      <button className="block w-full text-left px-4 py-2 hover:bg-gray-100" onClick={() => handleDelete(offre.id)}>
+                        Supprimer
+                      </button>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </main>
     </div>
   );
